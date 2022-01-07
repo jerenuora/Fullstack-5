@@ -3,6 +3,19 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
 
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="error">
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newTitle, setNewTitle] = useState('')
@@ -40,12 +53,18 @@ const App = () => {
         'loggedBlogsAppUser', JSON.stringify(user)
       ) 
       blogService.setToken(user.token)
+      setErrorMessage(
+        `${user.name} logged in `
+      )     
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
 
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('wrong credentials')
+      setErrorMessage('wrong username or password')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -61,11 +80,20 @@ const App = () => {
     }
     console.log((blogObject.id))
     const returnedBlog = await blogService
-      .create(blogObject)
-      setBlogs(blogs.concat(returnedBlog))
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
+    .create(blogObject)
+    setBlogs(blogs.concat(returnedBlog))
+    setErrorMessage(
+      `A new blog '${newTitle}'' by ${newAuthor} was added`
+    )
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 5000)
+
+
+    setNewTitle('')
+    setNewAuthor('')
+    setNewUrl('')
+
       }
   
 
@@ -96,7 +124,7 @@ const App = () => {
   const blogList = () => (
     <div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} blogauthor={blog.author} />
+        <Blog key={blog.id} blog={blog}  />
         
       )}
       </div>
@@ -138,6 +166,8 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={errorMessage} />
+
       {user !== null ?
       <div>
         <h2>Blogs</h2>
