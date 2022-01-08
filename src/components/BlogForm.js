@@ -27,11 +27,14 @@ const BlogForm = ({ createBlog, setErrorMessage }) => {
 
   }
   return (
-    <form onSubmit={addBlog}>
+    <form
+      id='form_id'
+      onSubmit={addBlog}>
       <h2>Create new blog</h2>
       <p>
                 title:
         <input
+          id='title_id'
           type="text"
           value={newTitle}
           name="blog"
@@ -41,6 +44,7 @@ const BlogForm = ({ createBlog, setErrorMessage }) => {
       <p>
                 author:
         <input
+          id='author_id'
           type="text"
           value={newAuthor}
           name="blog"
@@ -50,6 +54,7 @@ const BlogForm = ({ createBlog, setErrorMessage }) => {
       <p>
                 url:
         <input
+          id='url_id'
           type="text"
           value={newUrl}
           name="blog"
