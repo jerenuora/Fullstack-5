@@ -56,3 +56,24 @@ test('Blog renders title, author and url, likes after view-button click ', () =>
     12
   )
 })
+
+test('Like button handles is called correct times ', () => {
+  const blog = {
+    title: 'A title',
+    author: 'An author',
+    url: 'www.url.com',
+    likes: 12,
+    user: 'user'
+  }
+  const mockUpdate = jest.fn()
+
+  const component = render(
+    <Blog blog={blog} updateBlog={mockUpdate}/>
+  )
+  const view_button = component.getByText('view')
+  fireEvent.click(view_button)
+  const like_button = component.getByText('like')
+  fireEvent.click(like_button)
+  fireEvent.click(like_button)
+  expect(mockUpdate.mock.calls).toHaveLength(2)
+})
