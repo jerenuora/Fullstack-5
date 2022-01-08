@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
-import loginService from './services/login' 
+import loginService from './services/login'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 
@@ -23,14 +23,14 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+      setBlogs(blogs)
+    )
   }, [])
 
   useEffect(() => {
@@ -50,11 +50,11 @@ const App = () => {
       })
       window.localStorage.setItem(
         'loggedBlogsAppUser', JSON.stringify(user)
-      ) 
+      )
       blogService.setToken(user.token)
       setErrorMessage(
         `${user.name} logged in `
-      )     
+      )
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -74,25 +74,25 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
 
     const returnedBlog = await blogService
-    .create(blogObject)
+      .create(blogObject)
     setBlogs(blogs.concat(returnedBlog))
-      }
+  }
 
   const updateLikes = async (id, blogObject) => {
 
     const returnedBlog = await blogService
-    .update(id, blogObject)
+      .update(id, blogObject)
     setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      }
-  
+  }
+
   const deleteBlog = async (id, userDeleting) => {
     console.log(userDeleting)
     console.log((user))
     try {
       await blogService
-      .remove(id)
-      setBlogs(blogs.filter(blog =>  blog.id !== id))
-    } catch (exeption)  {      
+        .remove(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+    } catch (exeption) {
       setErrorMessage('not authorised to delete')
       setTimeout(() => {
         setErrorMessage(null)
@@ -106,7 +106,7 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         username
-          <input
+        <input
           type="text"
           value={username}
           name="Username"
@@ -115,7 +115,7 @@ const App = () => {
       </div>
       <div>
         password
-          <input
+        <input
           type="password"
           value={password}
           name="Password"
@@ -123,29 +123,30 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
   )
 
   const blogList = () => {
-    const blogList = blogs.sort((a, b) => b.likes - a.likes )
+    const blogList = blogs.sort((a, b) => b.likes - a.likes)
     return (
-    <div>
-      {blogList.map(blog =>
-        <Blog 
-        key={blog.id} 
-        blog={blog} 
-        updateBlog={updateLikes} 
-        deleteBlog={deleteBlog} />
-        
-      )}
+      <div>
+        {blogList.map(blog =>
+          <Blog
+            key={blog.id}
+            blog={blog}
+            updateBlog={updateLikes}
+            deleteBlog={deleteBlog} />
+
+        )}
       </div>
-  )}
+    )
+  }
 
   const blogFormRef = useRef()
   const blogForm = () => (
-    
+
     <Togglable buttonLabel='Create Blog' ref={blogFormRef}>
-      <BlogForm createBlog={addBlog} setErrorMessage={setErrorMessage} 
+      <BlogForm createBlog={addBlog} setErrorMessage={setErrorMessage}
       />
     </Togglable>
   )
@@ -155,22 +156,22 @@ const App = () => {
       <Notification message={errorMessage} />
 
       {user !== null ?
-      <div>
-        <h2>Blogs</h2>
-        <p>{user.name} logged in
-        <button onClick={()=> window.localStorage.removeItem('loggedBlogsAppUser')}>logout</button>
-        </p>
-        {blogForm()}
-        {blogList()}
+        <div>
+          <h2>Blogs</h2>
+          <p>{user.name} logged in
+            <button onClick={() => window.localStorage.removeItem('loggedBlogsAppUser')}>logout</button>
+          </p>
+          {blogForm()}
+          {blogList()}
         </div>
         :
-      <div>
-      <h2>Login to app</h2>
-      {loginForm()}
+        <div>
+          <h2>Login to app</h2>
+          {loginForm()}
+        </div>
+
+      }
     </div>
-   
-  }
-  </div>
   )
 }
 
