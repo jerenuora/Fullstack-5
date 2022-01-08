@@ -38,6 +38,5 @@ test('Blogform calls with correct info', () => {
   expect(CreateBlog.mock.calls[0][0].title).toBe('A kind of title')
   expect(CreateBlog.mock.calls[0][0].author).toBe('A. Author')
   expect(CreateBlog.mock.calls[0][0].url).toBe('www.url.com')
-  
 })
 
