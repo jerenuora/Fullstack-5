@@ -5,15 +5,8 @@ const Blog = ({ blog, updateBlog }) => {
 
   const updateLike = async (event) => {
     event.preventDefault()
-    updateBlog(blog.id,{
-      user: blog.user.id,
-      likes: blog.likes +1,
-      author: blog.author,
-      title: blog.title,
-      url: blog.url
-            })
-
-      }
+    updateBlog(blog.id,blog)
+  }
 
   const blogStyle = {
     paddingTop: 10,
@@ -23,6 +16,7 @@ const Blog = ({ blog, updateBlog }) => {
     marginBottom: 5
   }
   if (showFullInfo) {
+    console.log(blog.user)
     return (
       <div style={blogStyle}>
         <div> 

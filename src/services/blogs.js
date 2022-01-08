@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Blog from '../components/Blog'
 const baseUrl = '/api/blogs'
 
 let token = null
@@ -21,12 +22,12 @@ const create = async newObject => {
   return response.data
 }
 
-const update = async (id, newObject) => {
+const update = async (id, blog) => {
   const config = {
     headers: { Authorization: token },
   }
-
-  const response = await axios.put(`${baseUrl}/${id}`, newObject, config)
+  const changedBlog = { ...blog, likes: blog.likes + 1 }
+  const response = await axios.put(`${baseUrl}/${id}`, changedBlog, config)
   return response.data
 }
 

@@ -20,9 +20,6 @@ const Notification = ({ message }) => {
 const App = () => {
 
   const [blogs, setBlogs] = useState([])
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
 
   const [errorMessage, setErrorMessage] = useState(null)
 
