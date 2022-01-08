@@ -1,7 +1,19 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog }) => {
   const [showFullInfo, setShowFullInfo] = useState(false)
+
+  const updateLike = async (event) => {
+    event.preventDefault()
+    updateBlog(blog.id,{
+      user: blog.user.id,
+      likes: blog.likes +1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url
+            })
+
+      }
 
   const blogStyle = {
     paddingTop: 10,
@@ -20,7 +32,7 @@ const Blog = ({ blog }) => {
           {blog.url}
           </div>
           <div>
-          likes {blog.likes} <button >like</button>
+          likes {blog.likes} <button onClick={updateLike}>like</button>
           </div>
           <div>
           {blog.user.username}
