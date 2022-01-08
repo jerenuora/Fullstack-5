@@ -8,10 +8,9 @@ test('Blog renders title, author, not url, likes', () => {
     title: 'A title',
     author: 'An author',
     url: 'www.url.com',
-    likes: 12
+    likes: 12,
+    user: 'user'
   }
-  // const mockUpdate = jest.fn()
-  // const mockDelete = jest.fn()
 
   const component = render(
     <Blog blog={blog} />
@@ -26,6 +25,34 @@ test('Blog renders title, author, not url, likes', () => {
     'www.url.com'
   )
   expect(component.container).not.toHaveTextContent(
+    12
+  )
+})
+test('Blog renders title, author and url, likes after view-button click ', () => {
+  const blog = {
+    title: 'A title',
+    author: 'An author',
+    url: 'www.url.com',
+    likes: 12,
+    user: 'user'
+  }
+
+  const component = render(
+    <Blog blog={blog} />
+  )
+  const button = component.getByText('view')
+  fireEvent.click(button)
+
+  expect(component.container).toHaveTextContent(
+    'A title'
+  )
+  expect(component.container).toHaveTextContent(
+    'An author'
+  )
+  expect(component.container).toHaveTextContent(
+    'www.url.com'
+  )
+  expect(component.container).toHaveTextContent(
     12
   )
 })
