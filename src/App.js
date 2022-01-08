@@ -18,7 +18,6 @@ const Notification = ({ message }) => {
 }
 
 const App = () => {
-  const [blogFormVisible, setBlogFormVisible] = useState(false)
 
   const [blogs, setBlogs] = useState([])
   const [newTitle, setNewTitle] = useState('')
@@ -80,12 +79,6 @@ const App = () => {
     const returnedBlog = await blogService
     .create(blogObject)
     setBlogs(blogs.concat(returnedBlog))
-    setErrorMessage(
-      `A new blog '${newTitle}'' by ${newAuthor} was added`
-    )
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 5000)
 
 
       }
@@ -128,7 +121,7 @@ const App = () => {
   const blogForm = () => (
     
     <Togglable buttonLabel='Create Blog' ref={blogFormRef}>
-      <BlogForm createBlog={addBlog}
+      <BlogForm createBlog={addBlog} setErrorMessage={setErrorMessage}
       />
     </Togglable>
   )

@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 
-const BlogForm = ({ createBlog }) => {
+const BlogForm = ({ createBlog, setErrorMessage }) => {
     const [newTitle, setNewTitle] = useState('')
     const [newAuthor, setNewAuthor] = useState('')
     const [newUrl, setNewUrl] = useState('')
+    
     const addBlog = async (event) => {
         event.preventDefault()
         createBlog({
@@ -11,7 +12,14 @@ const BlogForm = ({ createBlog }) => {
           author: newAuthor,
           url: newUrl
                 })
-    
+        if (newTitle && newAuthor){
+            setErrorMessage(
+                `A new blog '${newTitle}'' by ${newAuthor} was added`
+                )
+                setTimeout(() => {
+                setErrorMessage(null)
+                }, 5000)
+        }
         setNewTitle('')
         setNewAuthor('')
         setNewUrl('')
