@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const [showFullInfo, setShowFullInfo] = useState(false)
 
   const updateLike = async (event) => {
     event.preventDefault()
     updateBlog(blog.id,blog)
+  }
+  const removeBlog = async (event) => {
+    event.preventDefault()
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      deleteBlog(blog.id,blog.user)
+    }
+    
+    
   }
 
   const blogStyle = {
@@ -31,6 +39,8 @@ const Blog = ({ blog, updateBlog }) => {
           <div>
           {blog.user.username}
           </div>
+          <button onClick={removeBlog}>remove</button>
+
         </div>
 
     </div>

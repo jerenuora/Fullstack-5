@@ -83,11 +83,24 @@ const App = () => {
     const returnedBlog = await blogService
     .update(id, blogObject)
     setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-
-
-
       }
-      
+  
+  const deleteBlog = async (id, userDeleting) => {
+    console.log(userDeleting)
+    console.log((user))
+    try {
+      await blogService
+      .remove(id)
+      setBlogs(blogs.filter(blog =>  blog.id !== id))
+    } catch (exeption)  {      
+      setErrorMessage('not authorised to delete')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
+
+    }
+  }
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -121,7 +134,8 @@ const App = () => {
         <Blog 
         key={blog.id} 
         blog={blog} 
-        updateBlog={updateLikes}  />
+        updateBlog={updateLikes} 
+        deleteBlog={deleteBlog} />
         
       )}
       </div>
@@ -131,7 +145,7 @@ const App = () => {
   const blogForm = () => (
     
     <Togglable buttonLabel='Create Blog' ref={blogFormRef}>
-      <BlogForm createBlog={addBlog} setErrorMessage={setErrorMessage}
+      <BlogForm createBlog={addBlog} setErrorMessage={setErrorMessage} 
       />
     </Togglable>
   )
