@@ -1,3 +1,5 @@
+import blogs from "../../src/services/blogs"
+
 describe('Blog app', function() {
   beforeEach(function() {
     cy.createUser({ name: 'Tero Testiuuseri', username: 'ttestter', password: 'passwords_123' })
@@ -57,11 +59,42 @@ describe('Blog app', function() {
       it('A blog can be removed', function() {
         cy.contains('A blog about testing')
         cy.get('#view-butt').click()
-        cy.get('#remove-butt').click() 
+        cy.get('#remove-butt').click()
         cy.should('not.contain', 'A blog about testing')
         cy.should('not.contain', 'James the tester')
         cy.should('not.contain', 'www.test.com')
       })
+    })
+    describe('When many blogs are created', function(){
+      beforeEach(function() {
+        cy.createBlog({ title: 'A first blog about testing', author: 'James the tester', url: 'www.test.com' })
+        cy.createBlog({ title: 'A second blog', author: 'James the tester', url: 'www.test.com' })
+        cy.createBlog({ title: 'A third blog', author: 'James the tester', url: 'www.test.com' })
+      })
+
+      it.only('blogs in a list are in order by likes', function() {
+        cy.get('#view-butt').click()
+        cy.get('#view-butt').click()
+        cy.get('#view-butt').click()
+        cy.get('#like-butt').click() // there is a bug here, needing two cliks
+        cy.get('#like-butt').click() // of the like button to increase its value
+        cy.get('#like-butt').click() 
+        cy.get('#like-butt').click() 
+        cy.get('#like-butt').click()
+        cy.get('#like-butt').click()
+        cy.contains('A third')
+          .contains('like').click()
+        cy.contains('A third')
+          .contains('like').click()
+        cy.contains('A third')
+          .contains('like').click()
+        cy.contains('A third')
+          .contains('like').click()
+        cy.get('.blog').as('blogs').eq(0).contains('likes 3')
+        cy.get('.blog').as('blogs').eq(1).contains('likes 2')
+        cy.get('.blog').as('blogs').eq(2).contains('likes 0')
+      })
+
 
     })
 

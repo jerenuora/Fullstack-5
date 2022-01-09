@@ -26,7 +26,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   }
   if (showFullInfo) {
     return (
-      <div style={blogStyle}>
+      <div id='blog-id' style={blogStyle}className="blog">
         <div>
           {blog.title} {blog.author}
           <button onClick={() => setShowFullInfo(false)}>hide</button>
