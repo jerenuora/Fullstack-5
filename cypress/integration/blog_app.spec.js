@@ -46,13 +46,14 @@ describe('Blog app', function() {
         cy.createBlog({ title: 'A blog about testing', author: 'James the tester', url: 'www.test.com' })
       })
 
-      it.only('A blog can be liked', function() {
+      it('A blog can be liked', function() {
         cy.contains('A blog about testing')
         cy.get('#view-butt').click()
         cy.get('#like-butt').click() // there is a bug here, needing two cliks
         cy.get('#like-butt').click() // of the like button to increase its value
         cy.contains('likes 1')
       })
+      
     })
 
   })
