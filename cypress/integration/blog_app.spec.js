@@ -78,8 +78,8 @@ describe('Blog app', function() {
         cy.get('#view-butt').click()
         cy.get('#like-butt').click() // there is a bug here, needing two cliks
         cy.get('#like-butt').click() // of the like button to increase its value
-        cy.get('#like-butt').click() 
-        cy.get('#like-butt').click() 
+        cy.get('#like-butt').click()
+        cy.get('#like-butt').click()
         cy.get('#like-butt').click()
         cy.get('#like-butt').click()
         cy.contains('A third')
