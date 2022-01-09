@@ -53,7 +53,8 @@ describe('Blog app', function() {
         cy.get('#like-butt').click() // of the like button to increase its value
         cy.contains('likes 1')
       })
-      it.only('A blog can be removed', function() {
+
+      it('A blog can be removed', function() {
         cy.contains('A blog about testing')
         cy.get('#view-butt').click()
         cy.get('#remove-butt').click() 
