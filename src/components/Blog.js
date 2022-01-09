@@ -34,7 +34,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
             {blog.url}
           </div>
           <div>
-            likes {blog.likes} <button onClick={updateLike}>like</button>
+            likes {blog.likes} <button id='like-butt' onClick={updateLike}>like</button>
           </div>
           <div>
             {blog.user.username}
@@ -50,7 +50,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
       <div style={blogStyle}>
         <div>
           {blog.title} {blog.author}
-          <button onClick={() => setShowFullInfo(true)}>view</button>
+          <button id='view-butt' onClick={() => setShowFullInfo(true)}>view</button>
         </div>
 
       </div>

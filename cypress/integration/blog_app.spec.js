@@ -27,9 +27,7 @@ describe('Blog app', function() {
   })
   describe('When logged in', function() {
     beforeEach(function() {
-      cy.get('#username').type('ttestter')
-      cy.get('#password').type('passwords_123')
-      cy.get('#login-butt').click()
+      cy.login({ username:'ttestter', password:'passwords_123' })
       cy.contains('Tero Testiuuseri logged in')
     })
 
@@ -41,6 +39,20 @@ describe('Blog app', function() {
       cy.get('#submit-butt').click()
       cy.contains('A new blog \'A title\'\' by Some author was added')
       cy.contains('A title Some author')
+    })
+
+    describe('When a blog is created', function(){
+      beforeEach(function() {
+        cy.createBlog({ title: 'A blog about testing', author: 'James the tester', url: 'www.test.com' })
+      })
+
+      it.only('A blog can be liked', function() {
+        cy.contains('A blog about testing')
+        cy.get('#view-butt').click()
+        cy.get('#like-butt').click() // there is a bug here, needing two cliks
+        cy.get('#like-butt').click() // of the like button to increase its value
+        cy.contains('likes 1')
+      })
     })
 
   })
