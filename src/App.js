@@ -147,7 +147,7 @@ const App = () => {
   const blogFormRef = useRef()
   const blogForm = () => (
 
-    <Togglable buttonLabel='Create Blog' ref={blogFormRef}>
+    <Togglable id='create-toggle' buttonLabel='Create Blog' ref={blogFormRef}>
       <BlogForm createBlog={addBlog} setErrorMessage={setErrorMessage}
       />
     </Togglable>

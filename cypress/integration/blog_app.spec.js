@@ -1,14 +1,6 @@
 describe('Blog app', function() {
   beforeEach(function() {
-    cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
-      name: 'Tero Testiuuseri',
-      username: 'ttestter',
-      password: 'passwords_123'
-    }
-    cy.request('POST', 'http://localhost:3000/api/users/', user)
-
-    cy.visit('http://localhost:3000')
+    cy.createUser({ name: 'Tero Testiuuseri', username: 'ttestter', password: 'passwords_123' })
   })
 
   it('Login form is shown', function() {
@@ -33,4 +25,24 @@ describe('Blog app', function() {
 
     })
   })
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('ttestter')
+      cy.get('#password').type('passwords_123')
+      cy.get('#login-butt').click()
+      cy.contains('Tero Testiuuseri logged in')
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('Create Blog').click()
+      cy.get('#title_id').type('A title')
+      cy.get('#author_id').type('Some author ')
+      cy.get('#url_id').type('www.smtns.something')
+      cy.get('#submit-butt').click()
+      cy.contains('A new blog \'A title\'\' by Some author was added')
+      cy.contains('A title Some author')
+    })
+
+  })
+
 })

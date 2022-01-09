@@ -61,7 +61,7 @@ const BlogForm = ({ createBlog, setErrorMessage }) => {
           onChange={({ target }) => setNewUrl(target.value)}
         />
       </p>
-      <button type="submit">create</button>
+      <button id='submit-butt' type="submit">create</button>
     </form>
   )
 }
